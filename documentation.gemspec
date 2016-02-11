@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency "sass-rails", ">= 4.0", "< 6"
   s.add_dependency "uglifier", ">= 2.2", "< 3.0"
   s.add_dependency 'redcarpet', '>= 3.1.0', '< 4.0'
-  s.add_dependency 'pygments.rb', '>= 0.5', '< 1.0'
   s.add_dependency 'nifty-attachments', '>= 1.0.3', "< 2"
   s.add_dependency 'nifty-dialog', '~> 1'
 
