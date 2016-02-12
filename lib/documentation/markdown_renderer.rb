@@ -13,7 +13,23 @@ module Documentation
       code.gsub!(/\A\:\:(.*)$/) { title = $1 ; nil }
       String.new.tap do |s|
         s << "<p class='codeTitle'>#{title}</p>" if title
-        s << Pygments.highlight(code, :lexer => language)
+        begin
+          require 'pygments'
+          s << Pygments.highlight(code, :lexer => language)
+        rescue LoadError
+          require 'rouge'    
+          lexer = Lexer.find_fancy(language, code) || Lexers::PlainText
+
+          # XXX HACK: Redcarpet strips hard tabs out of code blocks,
+          # so we assume you're not using leading spaces that aren't tabs,
+          # and just replace them here.
+          if lexer.tag == 'make'
+            code.gsub! /^    /, "\t"
+          end
+
+          formatter = Formatters::HTML.new(:css_class => "highlight #{lexer.tag}")
+          s << formatter.format(lexer.lex(code))
+        end
       end
     rescue
       "<div class='highlight'><pre>#{code}</pre></div>"
