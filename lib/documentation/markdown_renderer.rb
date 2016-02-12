@@ -1,5 +1,4 @@
 require 'redcarpet'
-require 'pygments'
 
 module Documentation
   class MarkdownRenderer < Redcarpet::Render::HTML
